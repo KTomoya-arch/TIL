@@ -1,11 +1,11 @@
-name: Pull
+name: Push
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  pull:
+  push:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,22 +27,19 @@ jobs:
         git config --global user.name "${GIT_NAME}"
         git config --global user.email "${GIT_MAIL}"
         git remote set-url origin "https://${REPO_OWNER}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-        echo 'gimonfu initialize'
 
         # gimonfuの初期設定
+        echo 'gimonfu initialize'
         npm init -y > /dev/null 2>&1
         npm install gimonfu
         echo "{\"user_id\":\"${HATENA_USER_ID}\",\"blog_id\":\"${HATENA_BLOG_ID}\",\"api_key\":\"${HATENA_API_KEY}\"}" > .gimonfu.json
 
-        # 新しい/更新された記事をダウンロード
-        echo 'gimonfu pull'
-        npx gimonfu --git-commit-date pull
+        # 新しい/更新された記事をアップロード
+        echo 'gimonfu push'
+        npx gimonfu --git-commit-date push
+        git add entry
 
         # コミットを作成する
-        git add entry
         # This script will not make a commit if there are no changes.
         if ! git diff --staged --exit-code --quiet; then \
           git commit -m "Pull articles (automatic commit)" ;\
-        fi
-
-        git push origin HEAD:main
