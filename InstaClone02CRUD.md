@@ -13,7 +13,43 @@
   
 2. その際fakerを使ってダミーテキストを生成する
 
- 
+```
+50.times do
+     User.create(
+        name: Faker::DragonBall.character,
+        email: Faker::Internet.email,
+        postcode: Faker::Address.postcode,  #integer
+        address: Faker::Address.city,
+        admin: Faker::Boolean.boolean       #boolean
+      )
+end
+```
+
+初めは上の書き方で書いたが以下のエラー。
+![](https://i.gyazo.com/b1aff3509752ff3a17859bdb97884908.png)
+なんとなく予想はしていたが多分インストールしたgemに`Faker::DragonBall.character`のような定義はないのだろうと思いつつvendorのfakerのlibの中を探っていくと・・・やはりか。
+
+```
+module Faker
+  class JapaneseMedia
+    class DragonBall < Base
+      class << self
+        ##
+        # Produces the name of a character from Dragon Ball.
+        #
+        # @return [String]
+        #
+        # @example
+        #   Faker::Games::DragonBall.character #=> "Goku"
+        #
+        # @faker.version 1.8.0
+        def character
+          fetch('dragon_ball.characters')
+        end
+```
+`Faker::DragonBall.character`を`Faker::Games::DragonBall.character`にして解決。
+コピペを完全に信じてはいないがうまくいっていない場合はちゃんと自分の設定ファイルや定義ファイルを確認しようと思った。
+もちろんドラゴンボール愛
 
 3. 画像のアップロードにはcarrierwaveを使用する
 
@@ -40,6 +76,11 @@
   ファイルのアップロード機能を簡単に追加する事ができるgem。
 
 #### 導入手順
+`gem carrierwave`
+
+`$ bundle exec rails g uploader image`
+
+
 
   [参考サイト](https://pikawaka.com/rails/carrierwave)
 
