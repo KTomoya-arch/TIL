@@ -1,5 +1,8 @@
 # TIL
 
-Today I Learnedの略。日々の勉強ノート。
+- やったことの記録とまとめたけいはここに書く
 
-やったことの記録とまとめたけいはここに書く
+※日記は Scrapbox に記載することにした。
+https://scrapbox.io/katoengdao-00693857/
+
+
