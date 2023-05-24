@@ -1,0 +1,36 @@
+### [Change Name] UserTomoyaKato, tomoya.kato
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Create AWS IAM User etc.
+
+Resources:
+  ## IAM: Group
+  GroupAdministrators:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: Administrators
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+
+  ## IAM: User
+  UserTomoyaKato: ### [Change Name]
+    Type: AWS::IAM::User
+    Properties:
+      UserName: tomoya.kato ### [Change Name]
+      LoginProfile:
+        Password: 123456=NuFuA
+        PasswordResetRequired: true
+      Groups:
+        - !Ref GroupAdministrators
+
+Outputs:
+  ## IAM: Group
+  GroupAdministrators:
+    Value: !GetAtt GroupAdministrators.Arn
+    Export:
+      Name: !Sub ${AWS::StackName}-GroupAdministrators
+
+  ## IAM: User
+  UserTomoyaKato: ### [Change Name]
+    Value: !GetAtt UserTomoyaKato.Arn ### [Change Name]
+    Export:
+      Name: !Sub ${AWS::StackName}-UserTomoyaKato ### [Change Name]
