@@ -109,3 +109,23 @@ docker コンテナ内で detach をすると、container を動かしている�
 ### docker commit (コンテナを docker イメージにする)
 
 `$ docker commit イメージ名:tag名`
+
+### docker exec -it container bash
+
+コンテナに対して何らかの命令を出す
+
+### exit と detach
+
+- exit は内部で動いているプロセスを消して、コンテナから出る
+- detach は内部で動いているプロセスを残して、コンテナから出る(コンテナは up のまま)
+
+### docker のリポジトリ
+
+docker hub のリポジトリは 1 つのイメージに対して割り当てられる
+ubuntu のイメージに対して一つのリポジトリが存在する
+
+### docker tag
+
+対象となるイメージにもとイメージを参照するタグを作成する
+
+`docker tag source_image:tag target_image:tag`
