@@ -129,3 +129,36 @@ ubuntu のイメージに対して一つのリポジトリが存在する
 対象となるイメージにもとイメージを参照するタグを作成する
 
 `docker tag source_image:tag target_image:tag`
+
+### 本当はイメージ名はもっと長い
+
+<hostname>:<port>/<username>/<repository>:<tag>
+デフォルト: registry-1.docker.io(DockerHub)/デフォルト:libary/・・・・:latest
+
+### docker hub へ イメージを push
+
+`$ docker tag ubuntu:updated tomoyakato2023/my-first-repo`
+として名前を変更した。
+それを DockerHub にある自分のリポジトリへ push する。
+`$ docker push tomoyakato2023/my-first-repo`とすることで push できる。
+
+```
+docker push tomoyakato2023/my-first-repo
+Using default tag: latest
+The push refers to repository [docker.io/tomoyakato2023/my-first-repo]
+3e2da2bed4ca: Pushed
+3c9e1240a0f6: Mounted from library/ubuntu
+latest: digest: sha256:79824f2ea43682e7b9178c687084c7feb65907de1f8cf5eb1597af1f1455609a size: 736
+```
+
+push すると上記のようになる。
+今回の場合、ubuntu イメージをベースにしていてそこに手を加えた部分(test ファイルを追加した分)のレイヤーだけが
+docker hub には push され、ベースとなるイメージ部分は library/ubuntu の元イメージのところからマウントされる。
+つまり共有し合うということになる。
+元イメージが消えたら終わり・・・か w
+
+### docker rmi コマンド
+
+rm i メージ →rmi と覚えると良さげ
+docker のイメージを削除する。
+`$ docker rmi docker images`で全て削除できる。
