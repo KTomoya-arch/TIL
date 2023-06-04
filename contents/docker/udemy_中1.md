@@ -308,4 +308,20 @@ RUN apt-get install -y cvs
 
 #### CMD コマンド
 
-FROM,RUN,CMD を基本 3 つ覚えておけば良い。
+CMD は docker コンテナのデフォルトとなるコマンドを指定できる。
+デフォルトコマンドというのはコンテナを立ち上げた際に実行されるコマンドであり、docker run で上書きをすることも
+可能であることを過去に学んだ。
+
+CMD["executable", "param1", "param2"]
+CMD の最初は実行可能なコマンドを指す。
+原則として dockerfile の最後に記述する。
+
+### RUN と CMD の違い
+
+#### RUN vs CMD<br>
+
+- RUN および CMD はどちらも Linux のコマンドを後ろに続けるという意味では同じである。
+- CMD では docker イメージのデフォルトのコマンドを指定し、RUN では docker イメージを作るために必要なコマンドを指定する。
+- CMD はイメージレイヤを作らないが RUN はイメージレイヤを作る。
+
+### 
