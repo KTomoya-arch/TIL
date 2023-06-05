@@ -1,6 +1,2 @@
 FROM ubuntu:latest
-RUN touch test
-ENTRYPOINT ["ls"]
-CMD ["--help"]
-
-
+RUN mkdir created_in_dockerfile

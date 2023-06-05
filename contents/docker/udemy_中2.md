@@ -40,3 +40,48 @@ CMD["ls", "-l"]
 ### ENV
 
 環境変数を設定する
+下記のように書けば ENV を定義できる。
+
+```
+FROM ubuntu:latest
+ENV DEBIAN_FRONTEND=noninteractive
+ENV UNKO hogehoge
+```
+
+### WORKDIR
+
+docker instruction の実行ディレクトリを変更する。
+
+```
+RUN mkdir sample_folder
+RUN cd sample_folder
+RUN touch sample_file
+```
+
+上記の RUN で指定したコマンドは、すべてルートディレクトリで実行される。
+cd sample_folder の後 touch sample_file も当然ルートディレクトリに作成される。
+実行ディレクトリを変えることができる。
+
+## ホストとコンテナのファイル共有
+
+`$ docker run -it -v hostのディレクトリ名:コンテナのディレクトリ名`
+コンテナは何も指定をしないと、ルートユーザーで起動される
+コンテナとホストマシンを共有した際に、ルートユーザーで起動されてしまうと
+コンテナのディレクトリを操作した際に、ホスト側(共有先)を自由に操作できてしまうため、
+セキュリティ的に課題がある。なのでユーザーを指定して、コンテナを起動する。
+
+### cpu や memory の指定を行う
+
+--cpus <ofCPUs> --memory <byte>
+
+### port の指定
+
+-p <host_port>:<container_port>
+
+### コンテナの詳細を表示する
+
+`$ docker inspect`
+大量にデータが表示されるので
+grep -i と併用すると良い。
+
+`$ docker inspect <container_id> | grep -i <something>`
