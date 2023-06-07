@@ -1,22 +1,27 @@
-## Docker を使ってデータ解析環境を構築する
+## AWS を使用してコンテナを起動する
 
-<補足>
+`$ ssh -i ****.pem ubuntu@<EC2の外部DNS>`
 
-```
-M1チップのMacの場合，最新のAnacondaのバージョン(https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh)において，
-次レクチャーにて
-「$sh /opt/Anaconda3-2022.05-Linux-x86_64.sh -b -p /opt/anaconda3」
-を実行すると
-「 Could not open '/lib64/ld-linux-x86-64.so.2': No such file or directory」
-のようにエラーが出ることが確認できています．
-前レクチャーの最後のdocker buildの際に「--platform linux/amd64」オプションをつけることで問題なくAnacondaをインストールすることができることが確認できています．
+ssh では秘密鍵(クライアント)を用いて公開鍵暗号方式を行う。サーバー側に公開鍵を置いておく。
+上記の ssh コマンドの-i は、identity の意味で引数に鍵を取る。
 
-(コマンドは以下の様になります
-「docker build --platform linux/amd64 .」
-また，お使いのDocker desktopのバージョンによっては，--platformオプションがうまく認識されず，エラーになる可能性があるようです．その場合は，
-「docker buildx build --platform linux/amd64 .」
-のようにbuildxを使ってみてください．buildxでエラーが出る場合は，Docker Desktopのバージョンを最新にするなり，こちらのドキュメント(https://docs.docker.com/buildx/working-with-buildx/)を参考にインストールを試みてください．(こちらで動作確認ができているDocker Destktopのバージョンは4.10.0です
-M1チップ登場とDocker側の開発状況によって講座の内容がうまくいかないことが報告されていますが，こちらの方でなるべく最新情報を更新していきますのでよろしくお願いします．
+docker を ubuntu にインストールしたのは良いが、sudo 権限でインストールしたので
+ubuntu ユーザーには docker を実行する権限がない。そのため、docker というユーザーグループを作成し
+権限を付与し、そのグループに ubuntu ユーザーを入れる。
+さらにログインをし直す必要もあり。
 
-また，講座でサポートしているバージョン以外のものをお使いの場合はこちらでのサポートが限定的になることをご了承ください！
-```
+### docker save imageID > \*\*\*.tar
+
+docker イメージを tar ファイルに変換する
+
+### sftp コマンド
+
+secure file transfer protocol
+put コマンド、get コマンドが存在しており、リモートからローカルまたはローカルからリモートへファイルを送信することができる。
+ftp をセキュアにしたもの？
+
+### /var/lib/docker
+
+一般的に docker を linux で起動すると、
+`/var/lib/docker`がdockerオブジェクトで埋まっていく。
+そこの容量が足りないとrunできない。
